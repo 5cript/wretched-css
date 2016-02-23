@@ -1,2 +1,5 @@
 *.layout
 *build_log.html
+debug/bin/*
+debug/obj/*
+*.depend
