@@ -1,0 +1,3 @@
+body {
+  background: url(sweettexture.jpg), url(texture2.jpg) black no-repeat;
+}
