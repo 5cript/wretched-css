@@ -25,12 +25,12 @@ namespace WretchedCss
     template <>
     struct Valueifier <Numerical>
     {
-        static Numerical* create(std::vector <std::string>::const_iterator& begin,
-                                 std::vector <std::string>::const_iterator)
+        static Numerical* create(std::vector <RawValue>::const_iterator& begin,
+                                 std::vector <RawValue>::const_iterator const&)
         {
             try
             {
-                auto* num = new Numerical (boost::lexical_cast <double> (*begin));
+                auto* num = new Numerical (boost::lexical_cast <double> (begin->data));
                 ++begin;
                 return num;
             }
@@ -44,10 +44,10 @@ namespace WretchedCss
     template <>
     struct Valueifier <Color>
     {
-        static Color* create(std::vector <std::string>::const_iterator& begin,
-                             std::vector <std::string>::const_iterator)
+        static Color* create(std::vector <RawValue>::const_iterator& begin,
+                             std::vector <RawValue>::const_iterator const&)
         {
-            auto maybeColor = tryGetColorFromString(*begin);
+            auto maybeColor = tryGetColorFromString(begin->data);
             if (!maybeColor)
                 return nullptr;
 
@@ -59,10 +59,10 @@ namespace WretchedCss
     template <>
     struct Valueifier <Url>
     {
-        static Url* create(std::vector <std::string>::const_iterator& begin,
-                           std::vector <std::string>::const_iterator)
+        static Url* create(std::vector <RawValue>::const_iterator& begin,
+                           std::vector <RawValue>::const_iterator const&)
         {
-            auto maybeUrl = tryGetUrlFromString(*begin);
+            auto maybeUrl = tryGetUrlFromString(begin->data);
             if (!maybeUrl)
                 return nullptr;
 
@@ -74,10 +74,10 @@ namespace WretchedCss
     template <>
     struct Valueifier <Size>
     {
-        static Size* create(std::vector <std::string>::const_iterator& begin,
-                            std::vector <std::string>::const_iterator)
+        static Size* create(std::vector <RawValue>::const_iterator& begin,
+                            std::vector <RawValue>::const_iterator const&)
         {
-            auto maybeSize = tryGetSizeFromString(*begin);
+            auto maybeSize = tryGetSizeFromString(begin->data);
             if (!maybeSize)
                 return nullptr;
 
@@ -89,36 +89,40 @@ namespace WretchedCss
     template <typename... List>
     struct Valueifier <Keyword <List...> >
     {
-        static Keyword <List...>* create(std::vector <std::string>::const_iterator& begin,
-                                         std::vector <std::string>::const_iterator)
+        static Keyword <List...>* create(std::vector <RawValue>::const_iterator& begin,
+                                         std::vector <RawValue>::const_iterator const&)
         {
-            Keyword <List...> kw(*begin);
+            Keyword <List...> kw(begin->data);
             if (kw.verify())
-                return new Keyword <List...> (*begin++);
+            {
+                auto* kw = new Keyword <List...> (begin->data);
+                ++begin;
+                return kw;
+            }
         }
     };
 
     template <bool reqPos>
     struct Valueifier <Position <reqPos> >
     {
-        static Position <reqPos>* create(std::vector <std::string>::const_iterator& begin,
-                                         std::vector <std::string>::const_iterator end)
+        static Position <reqPos>* create(std::vector <RawValue>::const_iterator& begin,
+                                         std::vector <RawValue>::const_iterator const& end)
         {
             if (end - begin < (reqPos ? 3 : 2))
                 return nullptr;
 
             auto iter = begin;
 
-            auto left = tryGetSizeFromString(*iter);
+            auto left = tryGetSizeFromString(iter->data);
             if (!left)
                 return nullptr;
 
-            auto top = tryGetSizeFromString(*(++iter));
+            auto top = tryGetSizeFromString((++iter)->data);
             if (!top)
                 return nullptr;
 
             if (reqPos)
-                if(*(++iter) != "/")
+                if((++iter)->data != "/")
                     return nullptr;
 
             begin = iter;
@@ -129,19 +133,19 @@ namespace WretchedCss
     template <>
     struct Valueifier <Point>
     {
-        static Point* create(std::vector <std::string>::const_iterator& begin,
-                             std::vector <std::string>::const_iterator end)
+        static Point* create(std::vector <RawValue>::const_iterator& begin,
+                             std::vector <RawValue>::const_iterator const& end)
         {
             if (end - begin < 2)
                 return nullptr;
 
             auto iter = begin;
 
-            auto left = tryGetSizeFromString(*iter);
+            auto left = tryGetSizeFromString(iter->data);
             if (!left)
                 return nullptr;
 
-            auto top = tryGetSizeFromString(*(++iter));
+            auto top = tryGetSizeFromString((++iter)->data);
             if (!top)
                 return nullptr;
 

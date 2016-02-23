@@ -1,4 +1,5 @@
 #include "property.hpp"
+#include "known_properties.hpp"
 
 #include "twisted-spirit/core/parser_core.hpp"
 #include "twisted-spirit/core/parse.hpp"
@@ -96,12 +97,6 @@ namespace WretchedCss
         if (maybeRawProperty.first == ParsingResult::FAIL)
             throw std::invalid_argument("argument is not a well formed property");
 
-        std::cout << maybeRawProperty.second.key << std::endl;
-        for (auto const& i : maybeRawProperty.second.values)
-        {
-            std::cout << "|" << i.data << " (" << i.isExtended << ")" << std::endl;
-        }
-
         return result;
     }
 //#####################################################################################################################
@@ -111,6 +106,8 @@ namespace WretchedCss
 
         // first generate a raw property
         auto raw = preprocessProperty(property);
+
+        raw.values
 
         return p;
     }
