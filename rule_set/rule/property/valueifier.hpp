@@ -110,7 +110,11 @@ namespace WretchedCss
                                    std::vector <RawValue>::const_iterator const& end)
         {
             if (begin != end)
-                return new StringValue(begin->data);
+            {
+                auto* sv = new StringValue(begin->data);
+                begin++;
+                return sv;
+            }
             return nullptr;
         }
     };
@@ -121,39 +125,41 @@ namespace WretchedCss
         static Point* create(std::vector <RawValue>::const_iterator& begin,
                              std::vector <RawValue>::const_iterator const& end)
         {
-            auto iter = begin;
+            return nullptr;
+            /*
+                auto iter = begin;
 
-            if (iter == end)
-                return nullptr;
+                if (iter == end)
+                    return nullptr;
 
-            auto left = tryGetNumericValueFromString(iter->data);
-            if (!left)
-                return nullptr;
-            else
-                ++iter;
-
-            boost::optional <NumericValue> top;
-            if (iter != end)
-                top = tryGetNumericValueFromString(iter->data);
-
-            if (!top)
-            {
-                if (left.get().unit == Unit::keyword)
-                    top = boost::optional <NumericValue> {NumericValue{Unit::keyword, 0., "center"}};
+                auto left = tryGetNumericValueFromString(iter->data);
+                if (!left)
+                    return nullptr;
                 else
-                    top = boost::optional <NumericValue> {NumericValue{Unit::percent, 50., ""}};
-            }
-            else
-                ++iter;
+                    ++iter;
 
-            if (left.get().unit == Unit::keyword)
-                if (left.get().strValue == "bottom" || left.get().strValue == "top")
-                    std::swap(left, top);
+                boost::optional <NumericValue> top;
+                if (iter != end)
+                    top = tryGetNumericValueFromString(iter->data);
 
-            begin = iter;
-            return new Point (left.get(), top.get());
+                if (!top)
+                {
+                    if (left.get().unit == Unit)
+                        top = boost::optional <NumericValue> {NumericValue{Unit::keyword, 0., "center"}};
+                    else
+                        top = boost::optional <NumericValue> {NumericValue{Unit::percent, 50., ""}};
+                }
+                else
+                    ++iter;
+
+                if (left.get().unit == Unit)
+                    if (left.get().strValue == "bottom" || left.get().strValue == "top")
+                        std::swap(left, top);
+
+                begin = iter;
+                return new Point (left.get(), top.get());
+            */
         }
     };
-
 
 } // namespace WretchedCss

@@ -3,6 +3,12 @@
 namespace WretchedCss { namespace ValueTypes
 {
 //#####################################################################################################################
+    StringValue::StringValue(std::string value)
+        : value(std::move(value))
+    {
+
+    }
+//---------------------------------------------------------------------------------------------------------------------
     std::string StringValue::getTypeString() const
     {
         return "StringValue";

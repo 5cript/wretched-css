@@ -1,5 +1,10 @@
 body {
-	background: #00ff00 url("smiley.gif") no-repeat fixed center top/50% 50%;
+	background: #00ff00 url("smiley.gif") no-repeat fixed center top/70% 50% top;
 	opacity: 0.3;
 	color: #00FFFF;
+}
+
+.bla 
+{
+	background-color: #fff;
 }

@@ -35,16 +35,19 @@ namespace WretchedCss
         if (intermediate.first == ParsingResult::FAIL)
             throw std::invalid_argument("Not a valid css file");
 
-        Rule rule;
         for (auto const& i : intermediate.second)
         {
+            Rule rule;
+
             // rule-level
             rule.selector.selector = i.selector;
             for (auto const& prop : i.declarations)
             {
                 // property-level
-                auto p = parseProperty(prop);
+                rule.properties.push_back(std::move(parseProperty(prop)));
             }
+
+            rules.push_back(std::move(rule));
         }
     }
 //#####################################################################################################################

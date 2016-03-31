@@ -6,6 +6,8 @@
 #include "twisted-spirit/core/parse.hpp"
 #include "twisted-spirit/grammars/unescaped_string.hpp"
 
+#include "mplex/type_print/type_print.hpp"
+
 #include <stdexcept>
 #include <iostream>
 
@@ -44,8 +46,8 @@ namespace WretchedCss
                     )
                     |
                     (
-                        // solid segment. No space, no semicolon
-                        +(qi::char_ - qi::space - qi::char_(",/"))          [phoenix::push_back(_val, qi::_1)]
+                        // solid segment.
+                        +(qi::char_ - (qi::space | qi::char_(",/")))        [phoenix::push_back(_val, qi::_1)]
                     )
                 )
 			;
@@ -113,24 +115,26 @@ namespace WretchedCss
 
         p.key = raw.key;
 
-        #define CHECK_PARSE(Type) \
-            Value* value = Valueifier <Type>::create(begin, end); \
+        #define VALUEIFY_TYPE(Type) \
+            value = Valueifier <Type>::create(i, end); \
             if (value != nullptr) \
             { \
                 p.values.emplace_back(value); \
                 continue; \
             }
 
-        for (auto i = std::begin(raw.values), end = std::end(raw.values); i != end; ++i)
+        for (auto i = std::cbegin(raw.values), end = std::cend(raw.values); i < end; )
         {
-            CHECK_PARSE(Url);
-            CHECK_PARSE(Color);
-            CHECK_PARSE(NumericValue);
-            CHECK_PARSE(DimensionlessValue);
-            CHECK_PARSE(StringValue);
+            Value* value;
+
+            VALUEIFY_TYPE(Url);
+            VALUEIFY_TYPE(Color);
+            VALUEIFY_TYPE(NumericValue);
+            VALUEIFY_TYPE(DimensionlessValue);
+            VALUEIFY_TYPE(StringValue);
         }
 
-        #undef CHECK_PARSE
+        #undef VALUEIFY_TYPE
 
         return p;
     }

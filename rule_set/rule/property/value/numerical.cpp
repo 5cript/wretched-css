@@ -1,19 +1,20 @@
 #include "numerical.hpp"
 
 #include "twisted-spirit/core/parse.hpp"
-#include "../../../../parser/size.hpp"
+#include "../../../../parser/numerical.hpp"
 
 #include <map>
 #include <stdexcept>
 #include <cstdint>
 
+#include <iostream>
+
 namespace WretchedCss { namespace ValueTypes
 {
 //####################################################################################
-    NumericValue::NumericValue(Unit unit, double value, std::string strValue)
+    NumericValue::NumericValue(Unit unit, double value)
         : unit(unit)
         , value(value)
-        , strValue(std::move(strValue))
     {
 
     }

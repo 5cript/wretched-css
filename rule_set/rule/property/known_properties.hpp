@@ -241,7 +241,7 @@ namespace WretchedCss
 		>,
         KnownProperty <STRING("background-size"),
             PropertyParameter <STRING("background-size"), Point>
-        >,
+        >
 
         // Border
         //KnownProperty <SHORT_STRING("border"),

@@ -38,14 +38,6 @@ namespace WretchedCss
                 ("vmax", Unit::vmax)
 			;
 
-			posKeyword.add
-                ("left", "left")
-                ("right", "right")
-                ("center", "center")
-                ("top", "top")
-                ("bottom", "bottom")
-			;
-
             main =
                 (
                         double_                     [at_c <1> (_val) = qi::_1]
@@ -53,11 +45,6 @@ namespace WretchedCss
                         [
                             unit                    [at_c <0> (_val) = qi::_1]
                         ]
-                )
-                |
-                (
-                        posKeyword                  [at_c <2> (_val) = qi::_1]
-                    >>  eps                         [at_c <0> (_val) = Unit::keyword]
                 )
             ;
         }
@@ -67,7 +54,6 @@ namespace WretchedCss
 
         // Symbols
         qi::symbols <char const, ValueTypes::Unit> unit;
-        qi::symbols <char const, std::string> posKeyword;
     };
 
 } // namespace WretchedCss
