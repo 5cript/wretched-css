@@ -1,11 +1,13 @@
 #include "property.hpp"
-#include "known_properties.hpp"
+//#include "../rule_set/rule/property/known_properties.hpp"
+#include "../rule_set/rule/property/valueifier.hpp"
 
 #include "twisted-spirit/core/parser_core.hpp"
 #include "twisted-spirit/core/parse.hpp"
 #include "twisted-spirit/grammars/unescaped_string.hpp"
 
 #include <stdexcept>
+#include <iostream>
 
 namespace WretchedCss
 {
@@ -32,14 +34,18 @@ namespace WretchedCss
 			atomic =
                 (
                     (
-                            qi::lit("url(")
-                        >>  unescaped                                       [_val = qi::_1, dout(qi::_1)]
-                        >>  qi::char_(')')
+                        qi::char_('/')                                      [_val = "/"]
+                    )
+                    |
+                    (
+                            qi::lit("url(")                                 [_val = "url(\""]
+                        >>  unescaped                                       [_val += qi::_1]
+                        >>  qi::char_(')')                                  [phoenix::push_back(_val, '"'), phoenix::push_back(_val, qi::_1)]
                     )
                     |
                     (
                         // solid segment. No space, no semicolon
-                        +(qi::char_ - qi::space - qi::char_(","))          [phoenix::push_back(_val, qi::_1)]
+                        +(qi::char_ - qi::space - qi::char_(",/"))          [phoenix::push_back(_val, qi::_1)]
                     )
                 )
 			;
@@ -68,7 +74,7 @@ namespace WretchedCss
 
 
             main =
-                    key                         [at_c <0> (_val) = qi::_1, dout(qi::_1)]
+                    key                         [at_c <0> (_val) = qi::_1]
                 >>  values                      [at_c <1> (_val) = qi::_1]
             ;
         }
@@ -87,8 +93,6 @@ namespace WretchedCss
 //#####################################################################################################################
     RawProperty preprocessProperty(std::string const& property)
     {
-        RawProperty result;
-
         using namespace TwistedSpirit;
 
         TYPEDEF_GRAMMAR(raw_property_grammar);
@@ -97,7 +101,7 @@ namespace WretchedCss
         if (maybeRawProperty.first == ParsingResult::FAIL)
             throw std::invalid_argument("argument is not a well formed property");
 
-        return result;
+        return maybeRawProperty.second;
     }
 //#####################################################################################################################
     Property parseProperty(std::string const& property)
@@ -107,7 +111,26 @@ namespace WretchedCss
         // first generate a raw property
         auto raw = preprocessProperty(property);
 
-        raw.values
+        p.key = raw.key;
+
+        #define CHECK_PARSE(Type) \
+            Value* value = Valueifier <Type>::create(begin, end); \
+            if (value != nullptr) \
+            { \
+                p.values.emplace_back(value); \
+                continue; \
+            }
+
+        for (auto i = std::begin(raw.values), end = std::end(raw.values); i != end; ++i)
+        {
+            CHECK_PARSE(Url);
+            CHECK_PARSE(Color);
+            CHECK_PARSE(NumericValue);
+            CHECK_PARSE(DimensionlessValue);
+            CHECK_PARSE(StringValue);
+        }
+
+        #undef CHECK_PARSE
 
         return p;
     }

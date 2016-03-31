@@ -28,6 +28,7 @@ namespace WretchedCss
             using namespace common_usings;
             INSTALL_ERROR_HANDLER;
 			INSTALL_WARNING_HANDLER;
+			INSTALL_DEBUG_HANDLER;
 
 			names.add
                 ("black", 0x000000)

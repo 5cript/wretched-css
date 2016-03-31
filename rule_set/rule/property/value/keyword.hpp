@@ -11,9 +11,6 @@ namespace WretchedCss { namespace ValueTypes
     template <typename T, typename... List>
     struct ValidKeywords
     {
-        /**
-         *  Returns the keyword or an empty string
-         */
         static constexpr bool isKeyword(std::string const& rhs)
         {
             return rhs == std::string(T::c_str) ? true : ValidKeywords <List...>::isKeyword(rhs);
@@ -39,6 +36,16 @@ namespace WretchedCss { namespace ValueTypes
         bool verify() const
         {
             return keywords::isKeyword(value);
+        }
+
+        std::string getTypeString() const override
+        {
+            return "Keyword";
+        }
+
+        Keyword(std::string const& value)
+            : value(value)
+        {
         }
     };
 

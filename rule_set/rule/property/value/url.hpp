@@ -10,6 +10,7 @@ namespace WretchedCss { namespace ValueTypes
     {
         std::string value;
 
+        std::string getTypeString() const override;
         Url() = default;
         Url(std::string value);
     };

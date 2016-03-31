@@ -31,6 +31,7 @@ namespace WretchedCss { namespace ValueTypes
         uint8_t b;
         double a;
 
+        std::string getTypeString() const override;
         Color(uint8_t r, uint8_t g, uint8_t b, double a);
         Color() = default;
     };

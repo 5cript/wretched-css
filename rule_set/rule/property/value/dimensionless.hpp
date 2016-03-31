@@ -1,18 +1,16 @@
 #pragma once
 
 #include "../value.hpp"
-#include "numerical.hpp"
 
 namespace WretchedCss { namespace ValueTypes
 {
-    struct Point : public Value
+    struct DimensionlessValue : public Value
     {
-        NumericValue left;
-        NumericValue top;
+        double value;
 
         std::string getTypeString() const override;
-        Point() = default;
-        Point(NumericValue left, NumericValue top);
+        DimensionlessValue() = default;
+        DimensionlessValue(double value);
     };
 
 } // namespace ValueTypes

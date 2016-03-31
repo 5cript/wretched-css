@@ -2,12 +2,11 @@
 
 #include "value/keyword.hpp"
 #include "value/numerical.hpp"
-#include "value/size.hpp"
+#include "value/dimensionless.hpp"
 #include "value/string.hpp"
 #include "value/url.hpp"
 #include "value/point.hpp"
 #include "value/color.hpp"
-#include "value/position.hpp"
 
 #include <boost/lexical_cast.hpp>
 
@@ -23,14 +22,14 @@ namespace WretchedCss
     {};
 
     template <>
-    struct Valueifier <Numerical>
+    struct Valueifier <DimensionlessValue>
     {
-        static Numerical* create(std::vector <RawValue>::const_iterator& begin,
-                                 std::vector <RawValue>::const_iterator const&)
+        static DimensionlessValue* create(std::vector <RawValue>::const_iterator& begin,
+                                          std::vector <RawValue>::const_iterator const&)
         {
             try
             {
-                auto* num = new Numerical (boost::lexical_cast <double> (begin->data));
+                auto* num = new DimensionlessValue (boost::lexical_cast <double> (begin->data));
                 ++begin;
                 return num;
             }
@@ -72,17 +71,17 @@ namespace WretchedCss
     };
 
     template <>
-    struct Valueifier <Size>
+    struct Valueifier <NumericValue>
     {
-        static Size* create(std::vector <RawValue>::const_iterator& begin,
+        static NumericValue* create(std::vector <RawValue>::const_iterator& begin,
                             std::vector <RawValue>::const_iterator const&)
         {
-            auto maybeSize = tryGetSizeFromString(begin->data);
-            if (!maybeSize)
+            auto maybeNumericValue = tryGetNumericValueFromString(begin->data);
+            if (!maybeNumericValue)
                 return nullptr;
 
             ++begin;
-            return new Size(maybeSize.get());
+            return new NumericValue(maybeNumericValue.get());
         }
     };
 
@@ -99,34 +98,20 @@ namespace WretchedCss
                 ++begin;
                 return kw;
             }
+            else
+                return nullptr;
         }
     };
 
-    template <bool reqPos>
-    struct Valueifier <Position <reqPos> >
+    template <>
+    struct Valueifier <StringValue>
     {
-        static Position <reqPos>* create(std::vector <RawValue>::const_iterator& begin,
-                                         std::vector <RawValue>::const_iterator const& end)
+        static StringValue* create(std::vector <RawValue>::const_iterator& begin,
+                                   std::vector <RawValue>::const_iterator const& end)
         {
-            if (end - begin < (reqPos ? 3 : 2))
-                return nullptr;
-
-            auto iter = begin;
-
-            auto left = tryGetSizeFromString(iter->data);
-            if (!left)
-                return nullptr;
-
-            auto top = tryGetSizeFromString((++iter)->data);
-            if (!top)
-                return nullptr;
-
-            if (reqPos)
-                if((++iter)->data != "/")
-                    return nullptr;
-
-            begin = iter;
-            return new Position <reqPos>(left.get(), top.get());
+            if (begin != end)
+                return new StringValue(begin->data);
+            return nullptr;
         }
     };
 
@@ -136,22 +121,39 @@ namespace WretchedCss
         static Point* create(std::vector <RawValue>::const_iterator& begin,
                              std::vector <RawValue>::const_iterator const& end)
         {
-            if (end - begin < 2)
-                return nullptr;
-
             auto iter = begin;
 
-            auto left = tryGetSizeFromString(iter->data);
+            if (iter == end)
+                return nullptr;
+
+            auto left = tryGetNumericValueFromString(iter->data);
             if (!left)
                 return nullptr;
+            else
+                ++iter;
 
-            auto top = tryGetSizeFromString((++iter)->data);
+            boost::optional <NumericValue> top;
+            if (iter != end)
+                top = tryGetNumericValueFromString(iter->data);
+
             if (!top)
-                return nullptr;
+            {
+                if (left.get().unit == Unit::keyword)
+                    top = boost::optional <NumericValue> {NumericValue{Unit::keyword, 0., "center"}};
+                else
+                    top = boost::optional <NumericValue> {NumericValue{Unit::percent, 50., ""}};
+            }
+            else
+                ++iter;
+
+            if (left.get().unit == Unit::keyword)
+                if (left.get().strValue == "bottom" || left.get().strValue == "top")
+                    std::swap(left, top);
 
             begin = iter;
-            return new Point(left.get(), top.get());
+            return new Point (left.get(), top.get());
         }
     };
+
 
 } // namespace WretchedCss

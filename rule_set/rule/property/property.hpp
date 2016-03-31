@@ -17,6 +17,7 @@ namespace WretchedCss
         std::vector <RawValue> values;
     };
 
+
     // This type is for use, after parsing and preprocessing.
     struct Property
     {

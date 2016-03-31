@@ -1,3 +1,5 @@
 body {
-  background: url(sweettexture.jpg), url(texture2.jpg) black no-repeat;
+	background: #00ff00 url("smiley.gif") no-repeat fixed center top/50% 50%;
+	opacity: 0.3;
+	color: #00FFFF;
 }

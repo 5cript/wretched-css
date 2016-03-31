@@ -1,19 +1,18 @@
-#include "point.hpp"
+#include "dimensionless.hpp"
 
 namespace WretchedCss { namespace ValueTypes
 {
 //#####################################################################################################################
-    Point::Point(NumericValue left, NumericValue top)
-        : left(std::move(left))
-        , top(std::move(top))
+    std::string DimensionlessValue::getTypeString() const
+    {
+        return "DimensionlessValue";
+    }
+//---------------------------------------------------------------------------------------------------------------------
+    DimensionlessValue::DimensionlessValue(double value)
+        : value(value)
     {
 
     }
-//---------------------------------------------------------------------------------------------------------------------
-    std::string Point::getTypeString() const
-    {
-        return "Point";
-    }
 //#####################################################################################################################
-} // namespace ValueTypes
-} // namespace WretchedCss
+}
+}

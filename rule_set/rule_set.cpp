@@ -43,7 +43,6 @@ namespace WretchedCss
             for (auto const& prop : i.declarations)
             {
                 // property-level
-                std::cout << prop << std::endl;
                 auto p = parseProperty(prop);
             }
         }

@@ -17,6 +17,11 @@ namespace WretchedCss { namespace ValueTypes
     {
 
     }
+//-----------------------------------------------------------------------------------
+    std::string Color::getTypeString() const
+    {
+        return "Color";
+    }
 //####################################################################################
     Color ColorFromString(std::string const& color)
     {

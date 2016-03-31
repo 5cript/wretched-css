@@ -2,6 +2,8 @@
 
 #include "../rule_set/rule_set.hpp"
 
+#include "../rule_set/rule/property/value/color.hpp"
+
 #include <iostream>
 #include <fstream>
 #include <string>
