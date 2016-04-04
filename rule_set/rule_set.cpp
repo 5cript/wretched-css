@@ -7,6 +7,7 @@
 #include "../parser/property.hpp"
 
 #include <stdexcept>
+#include <sstream>
 #include <iostream>
 
 namespace WretchedCss
@@ -30,12 +31,12 @@ namespace WretchedCss
         using namespace TwistedSpirit;
 
         TYPEDEF_GRAMMAR(rule_set_grammar);
-        auto intermediate = parse<grammar>(removeComments(css));
+        auto intermediateRuleSet = parse<grammar>(removeComments(css));
 
-        if (intermediate.first == ParsingResult::FAIL)
+        if (intermediateRuleSet.first == ParsingResult::FAIL)
             throw std::invalid_argument("Not a valid css file");
 
-        for (auto const& i : intermediate.second)
+        for (auto const& i : intermediateRuleSet.second)
         {
             Rule rule;
 
@@ -49,6 +50,37 @@ namespace WretchedCss
 
             rules.push_back(std::move(rule));
         }
+    }
+//---------------------------------------------------------------------------------------------------------------------
+    std::string RuleSet::toCss(std::string const& lineBreak, bool curlyInNextLine, bool spacesInsteadOfTabs)
+    {
+        std::stringstream sstr;
+
+        for (auto const& i : rules)
+        {
+            sstr << i.selector.selector;
+            if (curlyInNextLine)
+                sstr << lineBreak <<'{';
+            else
+                sstr << " {";
+            sstr << lineBreak;
+
+            for (auto const& p : i.properties)
+            {
+                if (spacesInsteadOfTabs)
+                    sstr << "    ";
+                else
+                    sstr << '\t';
+
+                sstr << p.key << ": ";
+                for (auto const& i : p.values)
+                {
+                    //...
+                }
+                sstr << "\n";
+            }
+        }
+        return sstr.str();
     }
 //#####################################################################################################################
 } // namespace WretchedCss

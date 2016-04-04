@@ -32,7 +32,7 @@ namespace WretchedCss
             ;
 
             declaration %=
-                    *(qi::char_ - qi::char_(';'))
+                    *(qi::char_ - qi::char_(";{}"))
                 >>  ';'
             ;
 
@@ -44,7 +44,9 @@ namespace WretchedCss
             ;
 
             rule =
-                    selector                        [at_c <0> (_val) = qi::_1]
+                   *blank
+                >>  selector                        [at_c <0> (_val) = qi::_1]
+                >> *blank
                 >>  qi::char_('{')
                 >> *qi::space
                 >>  declarations                    [at_c <1> (_val) = qi::_1]
