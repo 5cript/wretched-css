@@ -28,7 +28,7 @@ namespace WretchedCss
             INSTALL_WARNING_HANDLER;
 
             selector %=
-                *(qi::char_ - qi::char_('{'))
+                *(qi::char_ - qi::char_('{') - blank)
             ;
 
             declaration %=
