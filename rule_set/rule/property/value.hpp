@@ -17,6 +17,7 @@ namespace WretchedCss
     struct Value
     {
         virtual std::string getTypeString() const = 0;
+        virtual std::string toString() const = 0;
         virtual ~Value() = default;
     };
 
