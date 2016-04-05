@@ -16,6 +16,7 @@ int main()
 
     RuleSet set;
     set.fromCss(data);
+    std::cout << set.toCss();
 
     return 0;
 }

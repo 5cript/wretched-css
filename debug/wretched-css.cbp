@@ -127,7 +127,6 @@
 		<Unit filename="../rule_set/rule/property/known_properties.hpp" />
 		<Unit filename="../rule_set/rule/property/property.hpp" />
 		<Unit filename="../rule_set/rule/property/value.hpp" />
-		<Unit filename="../rule_set/rule/property/value/border_width.hpp" />
 		<Unit filename="../rule_set/rule/property/value/color.cpp" />
 		<Unit filename="../rule_set/rule/property/value/color.hpp" />
 		<Unit filename="../rule_set/rule/property/value/dimensionless.cpp" />
