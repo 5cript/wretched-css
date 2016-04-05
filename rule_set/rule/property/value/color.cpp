@@ -36,7 +36,10 @@ namespace WretchedCss { namespace ValueTypes
         }
         else
         {
-            result << "#" << std::setw(2) << std::setfill('0') << std::hex << (int)r << (int)g << (int)b;
+            result << "#" << std::hex <<
+                std::setw(2) << std::setfill('0') << (int)r <<
+                std::setw(2) << std::setfill('0') << (int)g <<
+                std::setw(2) << std::setfill('0') << (int)b;
         }
         return result.str();
     }

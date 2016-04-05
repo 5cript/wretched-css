@@ -20,7 +20,7 @@ namespace WretchedCss { namespace ValueTypes
 //------------------------------------------------------------------------------------
     std::string Url::toString() const
     {
-        return value;
+        return "url(\"" + value + "\")";
     }
 //####################################################################################
     boost::optional <Url> tryGetUrlFromString(std::string const& str)

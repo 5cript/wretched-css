@@ -20,21 +20,21 @@ namespace WretchedCss
             INSTALL_ERROR_HANDLER;
 			INSTALL_WARNING_HANDLER;
 
-			no_close_paren %= qi::char_ - qi::char_(')');
+			no_close_paren = qi::char_ - qi::char_(')');
 
-			no_quote %= qi::char_ - qi::char_('"');
+			no_quote = qi::char_ - qi::char_('"');
 
 			main =
                     qi::lit("url(")
                 >> *space
                 >>  ((
                             qi::char_('"')
-                        >> *no_quote            [_val = qi::_1]
+                        >> *no_quote            [phoenix::push_back(_val, qi::_1)]
                         >>  qi::char_('"')
                     )
                     |
                     (
-                            no_close_paren
+                            no_close_paren      [phoenix::push_back(_val, qi::_1)]
                     ))
                 >> *space
                 >>  qi::char_(')')
@@ -43,8 +43,8 @@ namespace WretchedCss
 
         // Rules
         qi::rule <Iterator, grammar_result()> main;
-        qi::rule <Iterator, std::string()> no_close_paren;
-        qi::rule <Iterator, std::string()> no_quote;
+        qi::rule <Iterator, char()> no_close_paren;
+        qi::rule <Iterator, char()> no_quote;
     };
 
 } // namespace WretchedCss
