@@ -59,6 +59,7 @@ namespace WretchedCss
         for (auto const& i : rules)
         {
             sstr << i.selector.selector;
+
             if (curlyInNextLine)
                 sstr << lineBreak <<'{';
             else
@@ -72,13 +73,14 @@ namespace WretchedCss
                 else
                     sstr << '\t';
 
-                sstr << p.key << ": ";
-                for (auto const& i : p.values)
+                sstr << p.key << ":";
+                for (auto const& value : p.values)
                 {
-                    //...
+                    sstr << ' ' << value->toString();
                 }
-                sstr << "\n";
+                sstr << ';' << lineBreak;
             }
+            sstr << '}' << lineBreak << lineBreak;
         }
         return sstr.str();
     }
