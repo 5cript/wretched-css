@@ -1,5 +1,8 @@
 #include "dimensionless.hpp"
 
+#include <sstream>
+#include <iomanip>
+
 namespace WretchedCss { namespace ValueTypes
 {
 //#####################################################################################################################
@@ -12,6 +15,13 @@ namespace WretchedCss { namespace ValueTypes
         : value(value)
     {
 
+    }
+//---------------------------------------------------------------------------------------------------------------------
+    std::string DimensionlessValue::toString() const
+    {
+        std::stringstream sstr;
+        sstr << std::setprecision(3) << value;
+        return sstr.str();
     }
 //#####################################################################################################################
 }

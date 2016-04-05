@@ -4,6 +4,8 @@
 
 #include "../../../../parser/color.hpp"
 
+#include <iomanip>
+#include <sstream>
 #include <stdexcept>
 
 namespace WretchedCss { namespace ValueTypes
@@ -21,6 +23,22 @@ namespace WretchedCss { namespace ValueTypes
     std::string Color::getTypeString() const
     {
         return "Color";
+    }
+//-----------------------------------------------------------------------------------
+    std::string Color::toString() const
+    {
+        std::stringstream result;
+        if (a > 0.000001)
+        {
+            result << "rgba(";
+            result << (int)r << ", " << (int)g << ", " << (int)b << ", " << std::setprecision(3) << (double)a;
+            result << ")";
+        }
+        else
+        {
+            result << "#" << std::setw(2) << std::setfill('0') << std::hex << (int)r << (int)g << (int)b;
+        }
+        return result.str();
     }
 //####################################################################################
     Color ColorFromString(std::string const& color)

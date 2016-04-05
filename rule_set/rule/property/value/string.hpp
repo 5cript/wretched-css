@@ -9,6 +9,7 @@ namespace WretchedCss { namespace ValueTypes
         std::string value;
         StringValue(std::string value);
 
+        std::string toString() const override;
         std::string getTypeString() const override;
     };
 

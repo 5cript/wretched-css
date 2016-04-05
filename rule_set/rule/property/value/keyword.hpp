@@ -43,6 +43,11 @@ namespace WretchedCss { namespace ValueTypes
             return "Keyword";
         }
 
+        std::string toString() const override
+        {
+            return value;
+        }
+
         Keyword(std::string const& value)
             : value(value)
         {

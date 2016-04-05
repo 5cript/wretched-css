@@ -31,6 +31,7 @@ namespace WretchedCss { namespace ValueTypes
         double value;
 
         std::string getTypeString() const override;
+        std::string toString() const override;
         NumericValue(Unit unit = Unit::px, double value = 0.);
     };
 

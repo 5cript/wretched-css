@@ -17,6 +17,11 @@ namespace WretchedCss { namespace ValueTypes
     {
         return "Url";
     }
+//------------------------------------------------------------------------------------
+    std::string Url::toString() const
+    {
+        return value;
+    }
 //####################################################################################
     boost::optional <Url> tryGetUrlFromString(std::string const& str)
     {

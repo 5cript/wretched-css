@@ -8,6 +8,7 @@ namespace WretchedCss { namespace ValueTypes
     {
         double value;
 
+        std::string toString() const override;
         std::string getTypeString() const override;
         DimensionlessValue() = default;
         DimensionlessValue(double value);

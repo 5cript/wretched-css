@@ -10,6 +10,11 @@ namespace WretchedCss { namespace ValueTypes
 
     }
 //---------------------------------------------------------------------------------------------------------------------
+    std::string Point::toString() const
+    {
+        return left.toString() + " " + top.toString();
+    }
+//---------------------------------------------------------------------------------------------------------------------
     std::string Point::getTypeString() const
     {
         return "Point";

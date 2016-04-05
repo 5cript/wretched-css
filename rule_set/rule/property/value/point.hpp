@@ -11,6 +11,7 @@ namespace WretchedCss { namespace ValueTypes
         NumericValue top;
 
         std::string getTypeString() const override;
+        std::string toString() const override;
         Point() = default;
         Point(NumericValue left, NumericValue top);
     };

@@ -7,7 +7,8 @@
 #include <stdexcept>
 #include <cstdint>
 
-#include <iostream>
+#include <sstream>
+#include <iomanip>
 
 namespace WretchedCss { namespace ValueTypes
 {
@@ -23,6 +24,13 @@ namespace WretchedCss { namespace ValueTypes
     {
         return "NumericValue";
     }
+//-----------------------------------------------------------------------------------
+    std::string NumericValue::toString() const
+    {
+        std::stringstream sstr;
+        sstr << std::setprecision(3) << value << unitToString(unit);
+        return sstr.str();
+    }
 //####################################################################################
     Unit getUnitFromString(std::string const& unit)
     {
@@ -31,6 +39,7 @@ namespace WretchedCss { namespace ValueTypes
             {"em", Unit::em},
             {"ex", Unit::ex},
             {"percent", Unit::percent},
+            {"%", Unit::percent},
             {"px", Unit::px},
             {"cm", Unit::cm},
             {"mm", Unit::mm},
@@ -59,7 +68,7 @@ namespace WretchedCss { namespace ValueTypes
         {
             {static_cast <uint32_t> (Unit::em), "em"},
             {static_cast <uint32_t> (Unit::ex), "ex"},
-            {static_cast <uint32_t> (Unit::percent), "percent"},
+            {static_cast <uint32_t> (Unit::percent), "%"},
             {static_cast <uint32_t> (Unit::px), "px"},
             {static_cast <uint32_t> (Unit::cm), "cm"},
             {static_cast <uint32_t> (Unit::mm), "mm"},
