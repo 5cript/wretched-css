@@ -26,6 +26,22 @@ namespace WretchedCss
         return stripped.second;
     }
 //#####################################################################################################################
+    Rule RuleSet::operator[](std::string const& selector) const
+    {
+        for (auto const& rule : rules)
+            if (selector == rule.selector.selector)
+                return rule;
+
+        return {};
+    }
+//---------------------------------------------------------------------------------------------------------------------
+    void RuleSet::eraseRule(std::string const& selector)
+    {
+        rules.erase(std::remove_if(rules.begin(), rules.end(), [&](auto const& rule){
+            return rule.selector.selector == selector;
+        }), rules.end());
+    }
+//---------------------------------------------------------------------------------------------------------------------
     void RuleSet::fromCss(std::string const& css)
     {
         using namespace TwistedSpirit;
@@ -83,6 +99,15 @@ namespace WretchedCss
             sstr << '}' << lineBreak << lineBreak;
         }
         return sstr.str();
+    }
+//---------------------------------------------------------------------------------------------------------------------
+    void RuleSet::addCss(std::string const& css)
+    {
+        RuleSet newSet;
+        newSet.fromCss(css);
+
+        for (auto const& i : newSet.rules)
+            rules.push_back(std::move(i));
     }
 //#####################################################################################################################
 } // namespace WretchedCss
