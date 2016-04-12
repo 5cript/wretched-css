@@ -43,6 +43,11 @@ namespace WretchedCss { namespace ValueTypes
         }
         return result.str();
     }
+//-----------------------------------------------------------------------------------
+    Color* Color::clone() const
+    {
+        return new Color{*this};
+    }
 //####################################################################################
     Color ColorFromString(std::string const& color)
     {

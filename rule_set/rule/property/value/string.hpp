@@ -11,6 +11,7 @@ namespace WretchedCss { namespace ValueTypes
 
         std::string toString() const override;
         std::string getTypeString() const override;
+        StringValue* clone() const override;
     };
 
 } // namespace ValueTypes

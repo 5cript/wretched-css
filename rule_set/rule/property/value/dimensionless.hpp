@@ -10,6 +10,8 @@ namespace WretchedCss { namespace ValueTypes
 
         std::string toString() const override;
         std::string getTypeString() const override;
+        DimensionlessValue* clone() const override;
+
         DimensionlessValue() = default;
         DimensionlessValue(double value);
     };

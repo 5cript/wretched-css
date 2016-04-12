@@ -18,6 +18,7 @@ namespace WretchedCss
     {
         virtual std::string getTypeString() const = 0;
         virtual std::string toString() const = 0;
+        virtual Value* clone() const = 0;
         virtual ~Value() = default;
     };
 

@@ -22,6 +22,11 @@ namespace WretchedCss { namespace ValueTypes
     {
         return "url(\"" + value + "\")";
     }
+//------------------------------------------------------------------------------------
+    Url* Url::clone() const
+    {
+        return new Url{*this};
+    }
 //####################################################################################
     boost::optional <Url> tryGetUrlFromString(std::string const& str)
     {

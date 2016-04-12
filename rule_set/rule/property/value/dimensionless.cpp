@@ -23,6 +23,11 @@ namespace WretchedCss { namespace ValueTypes
         sstr << std::setprecision(3) << value;
         return sstr.str();
     }
+//---------------------------------------------------------------------------------------------------------------------
+    DimensionlessValue* DimensionlessValue::clone() const
+    {
+        return new DimensionlessValue{*this};
+    }
 //#####################################################################################################################
 }
 }

@@ -31,6 +31,11 @@ namespace WretchedCss { namespace ValueTypes
         sstr << std::setprecision(3) << value << unitToString(unit);
         return sstr.str();
     }
+//-----------------------------------------------------------------------------------
+    NumericValue* NumericValue::clone() const
+    {
+        return new NumericValue {*this};
+    }
 //####################################################################################
     Unit getUnitFromString(std::string const& unit)
     {

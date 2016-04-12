@@ -19,6 +19,11 @@ namespace WretchedCss { namespace ValueTypes
     {
         return "Point";
     }
+//---------------------------------------------------------------------------------------------------------------------
+    Point* Point::clone() const
+    {
+        return new Point {*this};
+    }
 //#####################################################################################################################
 } // namespace ValueTypes
 } // namespace WretchedCss

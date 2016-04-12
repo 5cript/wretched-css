@@ -48,6 +48,11 @@ namespace WretchedCss { namespace ValueTypes
             return value;
         }
 
+        Keyword* clone() const override
+        {
+            return new Keyword <Keywords...> {*this};
+        }
+
         Keyword(std::string const& value)
             : value(value)
         {

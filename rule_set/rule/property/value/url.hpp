@@ -12,6 +12,8 @@ namespace WretchedCss { namespace ValueTypes
 
         std::string getTypeString() const override;
         std::string toString() const override;
+        Url* clone() const override;
+
         Url() = default;
         Url(std::string value);
     };

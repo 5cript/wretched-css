@@ -21,8 +21,13 @@ namespace WretchedCss
     // This type is for use, after parsing and preprocessing.
     struct Property
     {
+        Property() = default;
+
         std::string key;
         std::vector <std::unique_ptr <Value> > values;
+
+        Property& operator=(Property const& property);
+        Property(Property const& property);
     };
 
 } // namespace WretchedCss
