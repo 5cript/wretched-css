@@ -12,6 +12,7 @@ namespace WretchedCss
         Selector selector;
         std::vector <Property> properties;
 
+        void addProperty(Property const& prop);
         boost::optional <Property> operator[](std::string const& propertyName) const;
     };
 } // namespace WretchedCss

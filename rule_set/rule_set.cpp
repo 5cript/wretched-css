@@ -6,6 +6,8 @@
 #include "../parser/comment.hpp"
 #include "../parser/property.hpp"
 
+#include <boost/algorithm/string.hpp>
+
 #include <stdexcept>
 #include <sstream>
 #include <iostream>
@@ -29,7 +31,7 @@ namespace WretchedCss
     Rule RuleSet::operator[](std::string const& selector) const
     {
         for (auto const& rule : rules)
-            if (selector == rule.selector.selector)
+            if (selector == rule.selector.toString())
                 return rule;
 
         return {};
@@ -38,7 +40,7 @@ namespace WretchedCss
     void RuleSet::eraseRule(std::string const& selector)
     {
         rules.erase(std::remove_if(rules.begin(), rules.end(), [&](auto const& rule){
-            return rule.selector.selector == selector;
+            return rule.selector.toString() == selector;
         }), rules.end());
     }
 //---------------------------------------------------------------------------------------------------------------------
@@ -57,7 +59,8 @@ namespace WretchedCss
             Rule rule;
 
             // rule-level
-            rule.selector.selector = i.selector;
+            rule.selector = {i.selector};
+
             for (auto const& prop : i.declarations)
             {
                 // property-level
@@ -74,7 +77,7 @@ namespace WretchedCss
 
         for (auto const& i : rules)
         {
-            sstr << i.selector.selector;
+            sstr << i.selector.toString();
 
             if (curlyInNextLine)
                 sstr << lineBreak <<'{';
@@ -99,6 +102,12 @@ namespace WretchedCss
             sstr << '}' << lineBreak << lineBreak;
         }
         return sstr.str();
+    }
+//---------------------------------------------------------------------------------------------------------------------
+    RuleSet::RuleSet(std::string const& css)
+        : rules()
+    {
+        fromCss(css);
     }
 //---------------------------------------------------------------------------------------------------------------------
     void RuleSet::addCss(std::string const& css)

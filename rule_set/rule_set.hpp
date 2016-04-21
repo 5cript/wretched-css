@@ -14,6 +14,9 @@ namespace WretchedCss
     {
         std::vector <Rule> rules;
 
+        RuleSet() = default;
+        RuleSet(std::string const& css);
+
         /**
          * @brief operator [] Returns a Rule by selector, or an empty rule, if the selector was not found.
          * @param selector A css selector, such as "#id" or ".class"

@@ -1,4 +1,4 @@
-body {
+body:active bdy, .tid>p, div :checked : active, #cls~#xxs {
 	background: #00ff00 url("smiley.gif") no-repeat fixed center top/70% 50% top;
 	opacity: 0.3;
 	color: #00FFFF;
@@ -7,4 +7,15 @@ body {
 .bla 
 {
 	background-color: #fff;
+	color: #fff;
+}
+
+.bla.blub
+{
+	color: #aaa;
+}
+
+.bla
+{
+	background-color: #000;	
 }

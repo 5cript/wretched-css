@@ -22,6 +22,7 @@ namespace WretchedCss
     struct Property
     {
         Property() = default;
+        Property(std::string key, std::vector <std::unique_ptr <Value>> const& values);
 
         std::string key;
         std::vector <std::unique_ptr <Value> > values;

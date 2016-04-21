@@ -139,21 +139,4 @@ namespace WretchedCss
         return p;
     }
 //#####################################################################################################################
-    Property& Property::operator=(Property const& property)
-    {
-        this->key = property.key;
-        for (auto const& i : property.values)
-            values.push_back(std::unique_ptr <Value> (i->clone()));
-
-        return *this;
-    }
-//---------------------------------------------------------------------------------------------------------------------
-    Property::Property(Property const& property)
-        : key{property.key}
-        , values{}
-    {
-        for (auto const& i : property.values)
-            values.push_back(std::unique_ptr <Value> (i->clone()));
-    }
-//#####################################################################################################################
 } // namespace WretchedCss

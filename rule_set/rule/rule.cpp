@@ -14,5 +14,20 @@ namespace WretchedCss
         }
         return boost::none;
     }
+//---------------------------------------------------------------------------------------------------------------------
+    void Rule::addProperty(Property const& prop)
+    {
+        for (auto& property : properties)
+        {
+            // overwrite if found
+            if (property.key == prop.key)
+            {
+                property = prop;
+                return;
+            }
+        }
+        // else, not found
+        properties.push_back(prop);
+    }
 //#####################################################################################################################
 } // namespace WretchedCss

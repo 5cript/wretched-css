@@ -4,6 +4,8 @@
 
 #include "../rule_set/rule/property/value/color.hpp"
 
+#include "../style_sheet.hpp"
+
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -14,9 +16,15 @@ int main()
 
     auto data = readStringFromFile ("testfile.txt");
 
-    RuleSet set;
-    set.fromCss(data);
-    std::cout << set.toCss();
+    StyleSheet sheet(data);
+    auto style = sheet.select(".bla");
+
+    if (style)
+    {
+        RuleSet temp;
+        temp.rules.push_back(style.get().mergeInlineCss("background-color: #123456;").getRule());
+        std::cout << temp.toCss() << "\n";
+    }
 
     return 0;
 }

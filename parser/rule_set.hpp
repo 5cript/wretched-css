@@ -1,5 +1,7 @@
 #pragma once
 
+#include "../rule_set/rule/selector.hpp"
+
 #include "twisted-spirit/core/parser_core.hpp"
 #include "twisted-spirit/rules/space.hpp"
 
@@ -26,20 +28,24 @@ namespace WretchedCss
             using namespace common_usings;
             INSTALL_ERROR_HANDLER;
             INSTALL_WARNING_HANDLER;
+            INSTALL_DEBUG_HANDLER;
+
+            declaration.name("css_property_declaration");
 
             selector %=
-                *(qi::char_ - qi::char_('{') - blank)
+                *(qi::char_ - qi::char_('{'))
             ;
 
             declaration %=
-                    *(qi::char_ - qi::char_(";{}"))
-                >>  ';'
+                    +(qi::char_ - qi::char_(";{}"))
+                >   ';'
             ;
 
             declarations =
-               +(
-                        declaration                 [phoenix::push_back(_val, qi::_1)]
-                    >> *qi::space
+               *(
+                       *blank
+                    >>  declaration                 [phoenix::push_back(_val, qi::_1)]
+                    >> *blank
                 )
             ;
 
@@ -48,9 +54,11 @@ namespace WretchedCss
                 >>  selector                        [at_c <0> (_val) = qi::_1]
                 >> *blank
                 >>  qi::char_('{')
-                >> *qi::space
+                >> *blank
                 >>  declarations                    [at_c <1> (_val) = qi::_1]
+                >> *blank
                 >>  qi::char_('}')
+                >> *blank
             ;
 
             main %=
