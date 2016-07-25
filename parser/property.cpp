@@ -123,7 +123,7 @@ namespace WretchedCss
                 continue; \
             }
 
-        for (auto i = std::cbegin(raw.values), end = std::cend(raw.values); i < end; )
+        for (auto i = raw.values.cbegin(), end = raw.values.cend(); i < end; )
         {
             Value* value;
 

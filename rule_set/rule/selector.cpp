@@ -92,10 +92,8 @@ namespace WretchedCss
         TYPEDEF_GRAMMAR(selector_grammar);
         auto result = parse<grammar>(selector);
 
-        using namespace std::string_literals;
-
         if (result.first != ParsingResult::FULL_SUCCESS)
-            throw std::invalid_argument("selector is not a valid selector: "s + selector);
+            throw std::invalid_argument(std::string("selector is not a valid selector: ") + selector);
 
         #define DOES_NOT_APPLY \
         { \
@@ -141,10 +139,8 @@ namespace WretchedCss
         TYPEDEF_GRAMMAR(selector_grammar);
         auto result = parse<grammar>(raw);
 
-        using namespace std::string_literals;
-
         if (result.first != ParsingResult::FULL_SUCCESS)
-            throw std::invalid_argument("selector is not a valid selector: "s + raw);
+            throw std::invalid_argument(std::string("selector is not a valid selector: ") + raw);
 
         selectors_ = result.second;
 

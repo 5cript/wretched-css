@@ -6,8 +6,6 @@
 
 namespace WretchedCss
 {
-    using namespace std::string_literals;
-
 //#####################################################################################################################
     StyleSheet::StyleSheet(RuleSet const& ruleSet)
         : styles_()
@@ -24,12 +22,12 @@ namespace WretchedCss
 //---------------------------------------------------------------------------------------------------------------------
     boost::optional <Style> StyleSheet::getByClass(std::string const& clas)
     {
-        return select("."s + clas);
+        return select(std::string(".") + clas);
     }
 //---------------------------------------------------------------------------------------------------------------------
     boost::optional <Style> StyleSheet::getById(std::string const& id)
     {
-        return select("#"s + id);
+        return select(std::string("#") + id);
     }
 //---------------------------------------------------------------------------------------------------------------------
     boost::optional <Style> StyleSheet::getByType(std::string const& type)
@@ -52,9 +50,9 @@ namespace WretchedCss
         if (filtered.empty())
             return boost::none;
 
-        Style combined = std::rbegin(filtered)->second.second;
+        Style combined = filtered.rbegin()->second.second;
         Style* last = &combined;
-        for (auto front = std::rbegin(filtered), end = std::rend(filtered), i = std::next(front); i != end; ++i)
+        for (auto front = filtered.rbegin(), end = filtered.rend(), i = std::next(front); i != end; ++i)
         {
             last->derive(&i->second.second);
             last = &i->second.second;

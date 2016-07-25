@@ -39,7 +39,7 @@ namespace WretchedCss
 //---------------------------------------------------------------------------------------------------------------------
     void RuleSet::eraseRule(std::string const& selector)
     {
-        rules.erase(std::remove_if(rules.begin(), rules.end(), [&](auto const& rule){
+        rules.erase(std::remove_if(rules.begin(), rules.end(), [&](decltype(rules)::value_type const& rule){
             return rule.selector.toString() == selector;
         }), rules.end());
     }
@@ -64,7 +64,7 @@ namespace WretchedCss
             for (auto const& prop : i.declarations)
             {
                 // property-level
-                rule.properties.push_back(std::move(parseProperty(prop)));
+                rule.properties.push_back(parseProperty(prop));
             }
 
             rules.push_back(std::move(rule));

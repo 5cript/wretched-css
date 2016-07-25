@@ -44,8 +44,7 @@ namespace WretchedCss
 //---------------------------------------------------------------------------------------------------------------------
     Style Style::mergeInlineCss(std::string const& inlineCss) const
     {
-        using namespace std::string_literals;
-        StyleSheet sheet("#INLINE {"s + inlineCss + "}"s);
+        StyleSheet sheet(std::string("#INLINE {") + inlineCss + "}");
         auto inli = sheet.select("#INLINE").get(); // cannot be boost::none - impossible!
         inli.derive(this);
         return inli.getCombined();
