@@ -26,10 +26,10 @@ namespace WretchedCss { namespace ValueTypes
     {
         std::string originalString;
 
-        uint8_t r;
-        uint8_t g;
-        uint8_t b;
-        double a;
+		uint8_t r;
+		uint8_t g;
+		uint8_t b;
+		double a;
 
         std::string toString() const override;
         std::string getTypeString() const override;
@@ -48,11 +48,17 @@ namespace WretchedCss { namespace ValueTypes
 BOOST_FUSION_ADAPT_STRUCT
 (
     WretchedCss::ValueTypes::HslColor,
-    h, s, l, a
+	(uint16_t, h)
+	(double, s)
+	(double, l)
+	(double, a)
 )
 
 BOOST_FUSION_ADAPT_STRUCT
 (
     WretchedCss::ValueTypes::Color,
-    r, g, b, a
+	(uint8_t, r)
+	(uint8_t, g)
+	(uint8_t, b)
+	(double, a)
 )

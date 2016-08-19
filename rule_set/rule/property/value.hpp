@@ -27,5 +27,6 @@ namespace WretchedCss
 BOOST_FUSION_ADAPT_STRUCT
 (
     WretchedCss::RawValue,
-    data, isExtended
+	(std::string, data)
+	(bool, isExtended)
 )
