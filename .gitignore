@@ -4,3 +4,5 @@ debug/bin/*
 debug/obj/*
 *.depend
 __history/
+bin/*
+obj/*
