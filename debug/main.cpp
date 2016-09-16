@@ -24,6 +24,7 @@ int main()
         RuleSet temp;
         temp.rules.push_back(style.get().mergeInlineCss("background-color: #123456;").getRule());
         std::cout << temp.toCss() << "\n";
+        std::cout << temp.toJson() << "\n";
     }
 
     return 0;

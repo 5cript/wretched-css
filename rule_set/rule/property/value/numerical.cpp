@@ -1,7 +1,9 @@
 #include "numerical.hpp"
 
-#include "twisted-spirit/core/parse.hpp"
-#include "../../../../parser/numerical.hpp"
+#ifndef __BORLANDC__
+#	include "twisted-spirit/core/parse.hpp"
+#	include "../../../../parser/numerical.hpp"
+#endif
 
 #include <map>
 #include <stdexcept>
@@ -92,17 +94,19 @@ namespace WretchedCss { namespace ValueTypes
     }
 //-----------------------------------------------------------------------------------
     boost::optional <NumericValue> tryGetNumericValueFromString(std::string const& str)
-    {
-        using namespace TwistedSpirit;
+	{
+#ifndef __BORLANDC__
+		using namespace TwistedSpirit;
 
-        TYPEDEF_GRAMMAR(size_grammar);
-        auto maybeNumericValue = parse<grammar>(str);
+		TYPEDEF_GRAMMAR(size_grammar);
+		auto maybeNumericValue = parse<grammar>(str);
 
-        if (maybeNumericValue.first == ParsingResult::FULL_SUCCESS)
-        {
-            auto result = maybeNumericValue.second;
-            return boost::optional <NumericValue> {result};
-        }
+		if (maybeNumericValue.first == ParsingResult::FULL_SUCCESS)
+		{
+			auto result = maybeNumericValue.second;
+			return boost::optional <NumericValue> {result};
+		}
+#endif
         return boost::none;
     }
 //####################################################################################

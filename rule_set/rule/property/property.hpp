@@ -2,6 +2,9 @@
 
 #include "value.hpp"
 
+#include "SimpleJSON/stringify/jss_fusion_adapted_struct.hpp"
+#include "SimpleJSON/parse/jsd_fusion_adapted_struct.hpp"
+
 #include <boost/fusion/adapted/struct/adapt_struct.hpp>
 
 #include <string>
@@ -19,7 +22,8 @@ namespace WretchedCss
 
 
     // This type is for use, after parsing and preprocessing.
-    struct Property
+    struct Property : public JSON::Stringifiable <Property>
+                    , public JSON::Parsable <Property>
     {
         Property() = default;
         Property(std::string key, std::vector <std::unique_ptr <Value>> const& values);
@@ -36,5 +40,13 @@ namespace WretchedCss
 BOOST_FUSION_ADAPT_STRUCT
 (
     WretchedCss::RawProperty,
-    key, values
+	(std::string, key)
+	(std::vector <WretchedCss::RawValue>, values)
+)
+
+BOOST_FUSION_ADAPT_STRUCT
+(
+    WretchedCss::Property,
+    (std::string, key)
+    (std::vector <std::unique_ptr <WretchedCss::Value> >, values)
 )

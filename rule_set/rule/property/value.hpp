@@ -1,5 +1,8 @@
 #pragma once
 
+#include "SimpleJSON/stringify/jss_fusion_adapted_struct.hpp"
+#include "SimpleJSON/parse/jsd_fusion_adapted_struct.hpp"
+
 #include <boost/fusion/adapted/struct/adapt_struct.hpp>
 
 #include <string>
@@ -30,3 +33,10 @@ BOOST_FUSION_ADAPT_STRUCT
 	(std::string, data)
 	(bool, isExtended)
 )
+
+/*
+BOOST_FUSION_ADAPT_STRUCT
+(
+	WretchedCss::Value
+)
+*/

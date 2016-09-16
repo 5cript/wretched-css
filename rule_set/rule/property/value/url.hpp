@@ -7,6 +7,8 @@
 namespace WretchedCss { namespace ValueTypes
 {
     struct Url : public Value
+               , public JSON::Stringifiable <Url>
+               , public JSON::Parsable <Url>
     {
         std::string value;
 
@@ -22,3 +24,9 @@ namespace WretchedCss { namespace ValueTypes
 
 } // namespace ValueTypes
 } // namespace WretchedCss
+
+BOOST_FUSION_ADAPT_STRUCT
+(
+    WretchedCss::ValueTypes::Url,
+    (std::string, value)
+)
