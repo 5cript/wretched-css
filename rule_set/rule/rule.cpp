@@ -13,14 +13,26 @@ namespace WretchedCss
                 return boost::optional <Property> {prop};
         }
         return boost::none;
-    }
+	}
 //---------------------------------------------------------------------------------------------------------------------
-    void Rule::addProperty(Property const& prop)
-    {
-        for (auto& property : properties)
+	Property* Rule::operator[](std::string const& key)
+	{
+		for (auto& property : properties)
+		{
+			if (property.key == key)
+			{
+				return &property;
+			}
+		}
+		return nullptr;
+	}
+//---------------------------------------------------------------------------------------------------------------------
+	void Rule::addProperty(Property const& prop)
+	{
+		for (auto& property : properties)
         {
             // overwrite if found
-            if (property.key == prop.key)
+			if (property.key == prop.key)
             {
                 property = prop;
                 return;

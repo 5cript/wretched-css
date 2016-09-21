@@ -14,7 +14,9 @@ namespace WretchedCss
                 , public JSON::Parsable <Rule>
     {
         Selector selector;
-        std::vector <Property> properties;
+		std::vector <Property> properties;
+
+		Property* operator[](std::string const& key);
 
         void addProperty(Property const& prop);
         boost::optional <Property> operator[](std::string const& propertyName) const;

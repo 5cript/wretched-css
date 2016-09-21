@@ -6,6 +6,8 @@
 #	include "../parser/rule_set.hpp"
 #	include "../parser/comment.hpp"
 #	include "../parser/property.hpp"
+#else
+#	include "../bcb_patch.hpp"
 #endif
 
 #include "rule/property/value/keyword.hpp"
@@ -28,11 +30,11 @@
 
 JSON_DECLARE_POLYMORPHIC
 (
-    WretchedCss::Value,
+	WretchedCss::Value,
     (WretchedCss::ValueTypes::NumericValue)
     // (WretchedCss::ValueTypes::Keyword)
-    (WretchedCss::ValueTypes::DimensionlessValue)
-    (WretchedCss::ValueTypes::StringValue)
+	(WretchedCss::ValueTypes::DimensionlessValue)
+	(WretchedCss::ValueTypes::StringValue)
     (WretchedCss::ValueTypes::Url)
     (WretchedCss::ValueTypes::Point)
     (WretchedCss::ValueTypes::Color)
@@ -159,8 +161,12 @@ namespace WretchedCss
 //---------------------------------------------------------------------------------------------------------------------
     void RuleSet::fromJson(std::string const& json)
     {
-        auto tree = JSON::parse_json(json);
-        JSON::parse(rules, "style", tree);
+		auto tree = JSON::parse_json(json);
+
+		auto bla = JSON::polydecls <WretchedCss::Value>::identify_type(new WretchedCss::ValueTypes::StringValue);
+        auto blac = bla.c_str();
+
+        JSON::parse(rules, "stream", tree);
     }
 //---------------------------------------------------------------------------------------------------------------------
     std::string RuleSet::toJson() const
