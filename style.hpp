@@ -7,12 +7,13 @@ namespace WretchedCss
     class Style
     {
     public:
-        Style(Rule rule);
+		Style(Rule rule);
+		Style();
 
         /**
          *  Sets a style as a parent.
          */
-        void derive(Style const* parent);
+        Style& derive(Style const* parent);
 
         /**
          *  Merge parent.getCombined() and this.

@@ -60,9 +60,12 @@ namespace WretchedCss
 
         /**
          *  Selects a style by selector. eg. "body, #someid, .class.bla".
-         *  Automatically does inheritance etc.
-         */
-        boost::optional <Style> select(std::string const& selector) const;
+		 *  Automatically does inheritance etc.
+		 *
+		 *	@param selector The selector to select rules with.
+		 *	@param cascade Turns of automatic cascadation, if false.
+		 */
+		boost::optional <Style> select(std::string const& selector, bool cascade = true) const;
 
         /**
          *  Transforms the style sheet class into a .css text file.

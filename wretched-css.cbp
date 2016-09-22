@@ -11,6 +11,8 @@
 				<Option object_output="obj/Debug/" />
 				<Option type="3" />
 				<Option compiler="msys2_32" />
+				<Option host_application="D:/Development_IWS/wiki-project/wiki-editor-vcl/Win32/Debug/wiki-editor-vcl.exe" />
+				<Option run_host_application_in_terminal="0" />
 				<Option createDefFile="1" />
 				<Option createStaticLib="1" />
 				<Compiler>
@@ -27,6 +29,8 @@
 				<Option object_output="obj/Release/" />
 				<Option type="3" />
 				<Option compiler="msys2_32" />
+				<Option host_application="wiki-editor-vcl/Win32/Debug/wiki-editor-vcl.exe" />
+				<Option run_host_application_in_terminal="0" />
 				<Option createDefFile="1" />
 				<Option createStaticLib="1" />
 				<Compiler>
@@ -287,6 +291,8 @@
 		<Unit filename="style.hpp" />
 		<Unit filename="style_sheet.cpp" />
 		<Unit filename="style_sheet.hpp" />
+		<Unit filename="windebug.cpp" />
+		<Unit filename="windebug.hpp" />
 		<Extensions>
 			<code_completion />
 			<envvars />

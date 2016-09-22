@@ -9,6 +9,13 @@ namespace WretchedCss
         : rule_(std::move(rule))
         , parent_(nullptr)
     {
+	}
+//---------------------------------------------------------------------------------------------------------------------
+	Style::Style()
+		: rule_()
+		, parent_(nullptr)
+	{
+
     }
 //---------------------------------------------------------------------------------------------------------------------
     Rule Style::getCombined() const
@@ -21,7 +28,10 @@ namespace WretchedCss
         for (auto const& i : rule_.properties)
         {
             if (i.values.empty())
-                continue;
+				continue;
+
+			if (!i.values[0])
+				continue;
 
             if (i.values[0]->toString() == "inherit")
                 continue;
@@ -37,9 +47,10 @@ namespace WretchedCss
         return parent_ != nullptr;
     }
 //---------------------------------------------------------------------------------------------------------------------
-    void Style::derive(Style const* parent)
+    Style& Style::derive(Style const* parent)
     {
-        parent_ = parent;
+		parent_ = parent;
+		return *this;
     }
 //---------------------------------------------------------------------------------------------------------------------
     Style Style::mergeInlineCss(std::string const& inlineCss) const

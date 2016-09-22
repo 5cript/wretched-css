@@ -34,7 +34,8 @@ namespace WretchedCss { namespace ValueTypes
 		double a;
 
         std::string toString() const override;
-        std::string getTypeString() const override;
+		std::string getTypeString() const override;
+		uint32_t toInt() const;
         Color* clone() const override;
 
         Color(uint8_t r, uint8_t g, uint8_t b, double a);

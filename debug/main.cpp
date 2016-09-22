@@ -17,8 +17,17 @@ int main()
     auto data = readStringFromFile ("testfile.txt");
 
     StyleSheet sheet(data);
-    auto style = sheet.select(".bla");
+    auto body = sheet.select("body").get();
+    auto head = sheet.select(".header").get();
+    auto h2 = sheet.select(".header h2").get();
 
+    auto combine = Style(Style(h2.derive(&head).getCombined()).derive(&body).getCombined());
+    RuleSet set;
+    set.rules.push_back(combine.getCombined());
+
+    std::cout << set.toCss() << "\n";
+
+    /*
     if (style)
     {
         RuleSet temp;
@@ -26,6 +35,7 @@ int main()
         std::cout << temp.toCss() << "\n";
         std::cout << temp.toJson() << "\n";
     }
+    */
 
     return 0;
 }

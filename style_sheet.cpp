@@ -46,7 +46,7 @@ namespace WretchedCss
         return select(type);
     }
 //---------------------------------------------------------------------------------------------------------------------
-    boost::optional <Style> StyleSheet::select(std::string const& selector) const
+    boost::optional <Style> StyleSheet::select(std::string const& selector, bool cascade) const
     {
         std::multimap <long, std::pair <int, Style> > filtered;
         int counter = 0;

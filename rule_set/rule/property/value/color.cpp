@@ -43,6 +43,15 @@ namespace WretchedCss { namespace ValueTypes
                 std::setw(2) << std::setfill('0') << (int)b;
         }
         return result.str();
+	}
+//-----------------------------------------------------------------------------------
+	uint32_t Color::toInt() const
+	{
+		return
+			((b & 0xFF) << 16) +
+			((g & 0xFF) << 8)  +
+			 (r & 0xFF)
+		;
     }
 //-----------------------------------------------------------------------------------
     Color* Color::clone() const
