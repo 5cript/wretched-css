@@ -11,7 +11,7 @@
 				<Option object_output="obj/Debug/" />
 				<Option type="3" />
 				<Option compiler="msys2_32" />
-				<Option host_application="D:/Development_IWS/wiki-project/wiki-editor-vcl/Win32/Debug/wiki-editor-vcl.exe" />
+				<Option host_application="../wiki-editor-vcl/Win32/Debug/wiki-editor-vcl.exe" />
 				<Option run_host_application_in_terminal="0" />
 				<Option createDefFile="1" />
 				<Option createStaticLib="1" />
@@ -193,7 +193,6 @@
 		<Unit filename="../mplex/fundamental/is_same.hpp" />
 		<Unit filename="../mplex/fundamental/null_type.hpp" />
 		<Unit filename="../mplex/fundamental/tail.hpp" />
-		<Unit filename="../mplex/main.cpp" />
 		<Unit filename="../mplex/math/abs.hpp" />
 		<Unit filename="../mplex/math/constants.hpp" />
 		<Unit filename="../mplex/math/factorial.hpp" />
