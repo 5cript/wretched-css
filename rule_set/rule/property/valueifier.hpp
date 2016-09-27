@@ -88,15 +88,20 @@ namespace WretchedCss
     template <typename... List>
     struct Valueifier <Keyword <List...> >
     {
-        static Keyword <List...>* create(std::vector <RawValue>::const_iterator& begin,
+        static /* Keyword <List...>* */ StringValue* create(std::vector <RawValue>::const_iterator& begin,
                                          std::vector <RawValue>::const_iterator const&)
         {
             Keyword <List...> kw(begin->data);
             if (kw.verify())
-            {
-                auto* kw = new Keyword <List...> (begin->data);
-                ++begin;
-                return kw;
+			{
+				/*
+				auto* kw = new Keyword <List...> (begin->data);
+				++begin;
+				return kw;
+				*/
+				auto* sv = new StringValue(begin->data);
+				++begin;
+				return sv;
             }
             else
                 return nullptr;
@@ -110,9 +115,9 @@ namespace WretchedCss
                                    std::vector <RawValue>::const_iterator const& end)
         {
             if (begin != end)
-            {
+			{
                 auto* sv = new StringValue(begin->data);
-                begin++;
+                ++begin;
                 return sv;
             }
             return nullptr;

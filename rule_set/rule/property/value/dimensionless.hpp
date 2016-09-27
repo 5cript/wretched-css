@@ -5,6 +5,8 @@
 namespace WretchedCss { namespace ValueTypes
 {
     struct DimensionlessValue : public Value
+                              , JSON::Stringifiable <DimensionlessValue>
+                              , JSON::Parsable <DimensionlessValue>
     {
         double value;
 
@@ -18,3 +20,9 @@ namespace WretchedCss { namespace ValueTypes
 
 } // namespace ValueTypes
 } // namespace WretchedCss
+
+BOOST_FUSION_ADAPT_STRUCT
+(
+    WretchedCss::ValueTypes::DimensionlessValue,
+    (double, value)
+)

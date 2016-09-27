@@ -23,16 +23,19 @@ namespace WretchedCss { namespace ValueTypes
      *  RGBA color. 24bit + alpha.
      */
     struct Color : public Value
+                 , public JSON::Stringifiable <Color>
+                 , public JSON::Parsable <Color>
     {
         std::string originalString;
 
-		uint8_t r;
-		uint8_t g;
-		uint8_t b;
+		uint16_t r;
+		uint16_t g;
+		uint16_t b;
 		double a;
 
         std::string toString() const override;
-        std::string getTypeString() const override;
+		std::string getTypeString() const override;
+		uint32_t toInt() const;
         Color* clone() const override;
 
         Color(uint8_t r, uint8_t g, uint8_t b, double a);
@@ -57,8 +60,8 @@ BOOST_FUSION_ADAPT_STRUCT
 BOOST_FUSION_ADAPT_STRUCT
 (
     WretchedCss::ValueTypes::Color,
-	(uint8_t, r)
-	(uint8_t, g)
-	(uint8_t, b)
+	(uint16_t, r)
+	(uint16_t, g)
+	(uint16_t, b)
 	(double, a)
 )

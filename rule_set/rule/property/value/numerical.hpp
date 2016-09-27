@@ -26,6 +26,8 @@ namespace WretchedCss { namespace ValueTypes
      *  Holds values like 10px, 2em, 12.5%
      */
     struct NumericValue : public Value
+                        , public JSON::Stringifiable <NumericValue>
+                        , public JSON::Parsable <NumericValue>
     {
         Unit unit;
         double value;
@@ -64,5 +66,6 @@ namespace WretchedCss { namespace ValueTypes
 BOOST_FUSION_ADAPT_STRUCT
 (
     WretchedCss::ValueTypes::NumericValue,
-    unit, value
+	(WretchedCss::ValueTypes::Unit, unit)
+	(double, value)
 )

@@ -1,8 +1,9 @@
 #include "url.hpp"
 
-#include "twisted-spirit/core/parse.hpp"
-
-#include "../../../../parser/url.hpp"
+#ifndef __BORLANDC__
+#	include "twisted-spirit/core/parse.hpp"
+#	include "../../../../parser/url.hpp"
+#endif
 
 namespace WretchedCss { namespace ValueTypes
 {
@@ -29,15 +30,16 @@ namespace WretchedCss { namespace ValueTypes
     }
 //####################################################################################
     boost::optional <Url> tryGetUrlFromString(std::string const& str)
-    {
-        using namespace TwistedSpirit;
+	{
+#ifndef __BORLANDC__
+		using namespace TwistedSpirit;
 
-        TYPEDEF_GRAMMAR(url_grammar);
-        auto maybeUrl = parse<grammar>(str);
+		TYPEDEF_GRAMMAR(url_grammar);
+		auto maybeUrl = parse<grammar>(str);
 
-        if (maybeUrl.first == ParsingResult::FULL_SUCCESS)
-            return boost::optional <Url> (maybeUrl.second);
-
+		if (maybeUrl.first == ParsingResult::FULL_SUCCESS)
+			return boost::optional <Url> (maybeUrl.second);
+#endif
         return boost::none;
     }
 //####################################################################################

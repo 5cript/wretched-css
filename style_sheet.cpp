@@ -9,9 +9,20 @@ namespace WretchedCss
 //#####################################################################################################################
     StyleSheet::StyleSheet(RuleSet const& ruleSet)
         : styles_()
+        , pxPerEm_(16)
     {
         for (auto const& i : ruleSet.rules)
             styles_.push_back({i});
+    }
+//---------------------------------------------------------------------------------------------------------------------
+    unsigned long StyleSheet::getPxPerEm() const
+    {
+        return pxPerEm_;
+    }
+//---------------------------------------------------------------------------------------------------------------------
+    void StyleSheet::setPxPerEm(unsigned long pxPerEm)
+    {
+        pxPerEm_ = pxPerEm;
     }
 //---------------------------------------------------------------------------------------------------------------------
     StyleSheet::StyleSheet(std::string const& css)
@@ -30,12 +41,12 @@ namespace WretchedCss
         return select(std::string("#") + id);
     }
 //---------------------------------------------------------------------------------------------------------------------
-    boost::optional <Style> StyleSheet::getByType(std::string const& type)
+    boost::optional <Style> StyleSheet::getByType(std::string const& type) const
     {
         return select(type);
     }
 //---------------------------------------------------------------------------------------------------------------------
-    boost::optional <Style> StyleSheet::select(std::string const& selector)
+    boost::optional <Style> StyleSheet::select(std::string const& selector, bool cascade) const
     {
         std::multimap <long, std::pair <int, Style> > filtered;
         int counter = 0;

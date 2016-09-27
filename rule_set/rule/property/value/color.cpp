@@ -1,8 +1,9 @@
 #include "color.hpp"
 
-#include "twisted-spirit/core/parse.hpp"
-
-#include "../../../../parser/color.hpp"
+#ifndef __BORLANDC__
+#	include "twisted-spirit/core/parse.hpp"
+#	include "../../../../parser/color.hpp"
+#endif
 
 #include <iomanip>
 #include <sstream>
@@ -42,6 +43,15 @@ namespace WretchedCss { namespace ValueTypes
                 std::setw(2) << std::setfill('0') << (int)b;
         }
         return result.str();
+	}
+//-----------------------------------------------------------------------------------
+	uint32_t Color::toInt() const
+	{
+		return
+			((b & 0xFF) << 16) +
+			((g & 0xFF) << 8)  +
+			 (r & 0xFF)
+		;
     }
 //-----------------------------------------------------------------------------------
     Color* Color::clone() const
@@ -59,19 +69,21 @@ namespace WretchedCss { namespace ValueTypes
     }
 //-----------------------------------------------------------------------------------
     boost::optional <Color> tryGetColorFromString(std::string const& color)
-    {
-        using namespace TwistedSpirit;
+	{
+#ifndef __BORLANDC__
+		using namespace TwistedSpirit;
 
-        TYPEDEF_GRAMMAR(color_grammar);
-        auto maybeColor = parse<grammar>(color);
+		TYPEDEF_GRAMMAR(color_grammar);
+		auto maybeColor = parse<grammar>(color);
 
-        if (maybeColor.first == ParsingResult::FULL_SUCCESS)
-        {
-            auto result = maybeColor.second;
-            result.originalString = color;
-            return boost::optional <Color> {result};
-        }
-        return boost::none;
+		if (maybeColor.first == ParsingResult::FULL_SUCCESS)
+		{
+			auto result = maybeColor.second;
+			result.originalString = color;
+			return boost::optional <Color> {result};
+		}
+#endif
+		return boost::none;
     }
 //####################################################################################
 

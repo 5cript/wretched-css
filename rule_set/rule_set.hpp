@@ -27,6 +27,10 @@ namespace WretchedCss
 
         void fromCss(std::string const& css);
         std::string toCss(std::string const& lineBreak = "\n", bool curlyInNextLine = false, bool spacesInsteadOfTabs = true);
+
+        void fromJson(std::string const& json);
+        std::string toJson() const;
+
         void addCss(std::string const& css);
     };
 } // namespace WretchedCss

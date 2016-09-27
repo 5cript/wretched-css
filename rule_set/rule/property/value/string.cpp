@@ -9,6 +9,12 @@ namespace WretchedCss { namespace ValueTypes
 
     }
 //---------------------------------------------------------------------------------------------------------------------
+    StringValue::StringValue()
+        : value("")
+    {
+
+    }
+//---------------------------------------------------------------------------------------------------------------------
     std::string StringValue::getTypeString() const
     {
         return "StringValue";

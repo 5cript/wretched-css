@@ -19,3 +19,41 @@ body:active bdy, .tid>p, div :checked : active, #cls~#xxs {
 {
 	background-color: #000;	
 }
+
+body 
+{
+	background-color: white;
+	font-size: 8px;
+}
+
+.header {
+	font-size: 14px;
+	font-weight: bold;
+	color: black;
+}
+
+.header h2 {
+	font-size: 12px;
+}
+
+.header h3 {
+	font-size: 10px;
+}
+
+.header h4 {
+	font-size: 100%;
+}
+
+.header h5 {
+	font-size: 100%;
+}
+
+.header h6 {
+	font-size: 100%;
+}
+
+
+.text {
+	font-size: 8px;
+	color: yellow;
+}

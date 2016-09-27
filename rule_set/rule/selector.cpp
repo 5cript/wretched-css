@@ -1,8 +1,16 @@
 #include "selector.hpp"
 
-#include "twisted-spirit/core/parse.hpp"
-
-#include "../../parser/selector.hpp"
+#ifndef __BORLANDC__
+#	include "twisted-spirit/core/parse.hpp"
+#	include "../../parser/selector.hpp"
+#else
+#   ifndef Q_MOC_RUN // A Qt workaround, for those of you who use Qt
+#       include "SimpleJSON/parse/jsd.hpp"
+#       include "SimpleJSON/parse/jsd_convenience.hpp"
+#       include "SimpleJSON/stringify/jss.hpp"
+#       include "SimpleJSON/stringify/jss_fusion_adapted_struct.hpp"
+#   endif
+#endif
 
 #include <cmath>
 #include <algorithm>
@@ -10,13 +18,13 @@
 namespace WretchedCss
 {
 //#####################################################################################################################
-    std::string ParsedSelector::toString() const
-    {
-        std::string result;
+	std::string ParsedSelector::toString() const
+	{
+		std::string result;
 
-        if (type == SelectorType::Classes)
-        {
-            for (auto const& i : classes)
+		if (type == SelectorType::Classes)
+		{
+			for (auto const& i : classes)
             {
                 result.push_back('.');
                 result += i;
@@ -26,7 +34,7 @@ namespace WretchedCss
         {
             switch(type)
             {;
-            case(SelectorType::Id):
+			case(SelectorType::Id):
                 result.push_back('#');
                 break;
             case(SelectorType::All):
@@ -83,17 +91,25 @@ namespace WretchedCss
     }
 //---------------------------------------------------------------------------------------------------------------------
     bool ParsedSelector::canSelect(std::string const& selector) const
-    {
+	{
         if (selector.empty())
             return false;
         if (type == SelectorType::All && filters.empty())
             return true;
 
+#ifndef __BORLANDC__
         TYPEDEF_GRAMMAR(selector_grammar);
-        auto result = parse<grammar>(selector);
+        auto result = TwistedSpirit::parse<grammar>(selector);
 
         if (result.first != ParsingResult::FULL_SUCCESS)
             throw std::invalid_argument(std::string("selector is not a valid selector: ") + selector);
+#else
+        auto tree = JSON::parse_json(selector);
+        std::pair <std::nullptr_t, std::vector <ParsedSelector>> result;
+        Selector temp;
+        JSON::parse(temp, "selector", tree);
+        result.second = temp.getSelectors();
+#endif
 
         #define DOES_NOT_APPLY \
         { \
@@ -131,31 +147,33 @@ namespace WretchedCss
                 DOES_NOT_APPLY
         }
 
-        return applies;
+		return applies;
     }
 //#####################################################################################################################
     Selector::Selector(std::string const& raw)
-    {
-        TYPEDEF_GRAMMAR(selector_grammar);
-        auto result = parse<grammar>(raw);
+	{
+#ifndef __BORLANDC__
+		TYPEDEF_GRAMMAR(selector_grammar);
+		auto result = TwistedSpirit::parse<grammar>(raw);
 
-        if (result.first != ParsingResult::FULL_SUCCESS)
-            throw std::invalid_argument(std::string("selector is not a valid selector: ") + raw);
+		if (result.first != ParsingResult::FULL_SUCCESS)
+			throw std::invalid_argument(std::string("selector is not a valid selector: ") + raw);
 
-        selectors_ = result.second;
+		selectors_ = result.second;
+#endif
 
-        /*
-        for (auto const& i : selectors_)
-        {
-            std::cout << "type: " << (int)i.type << "\n";
-            std::cout << "selectorString: " << i.selectorString << "\n";
-            for (auto const& filter : i.filters)
-            {
-                std::cout << "filter: " << filter << "\n";
-            }
-            std::cout << "\n";
-        }
-        */
+		/*
+		for (auto const& i : selectors_)
+		{
+			std::cout << "type: " << (int)i.type << "\n";
+			std::cout << "selectorString: " << i.selectorString << "\n";
+			for (auto const& filter : i.filters)
+			{
+				std::cout << "filter: " << filter << "\n";
+			}
+			std::cout << "\n";
+		}
+		*/
     }
 //---------------------------------------------------------------------------------------------------------------------
     std::string Selector::toString() const
