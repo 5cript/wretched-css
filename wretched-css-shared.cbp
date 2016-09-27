@@ -36,7 +36,14 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
-		<Unit filename="main.cpp" />
+		<Linker>
+			<Add option="-static" />
+			<Add option="-static-libgcc" />
+			<Add option="-static-libstdc++" />
+			<Add option="-Wl,--kill-at" />
+		</Linker>
+		<Unit filename="dllmain.cpp" />
+		<Unit filename="dllmain.h" />
 		<Extensions>
 			<code_completion />
 			<envvars />

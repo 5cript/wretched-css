@@ -17,6 +17,8 @@
 #include <string>
 
 //#####################################################################################################################
+std::string lastError;
+//#####################################################################################################################
 char* allocateCString(std::string const& str)
 {
     char* cstr = new char[str.length() + 1];
@@ -32,6 +34,7 @@ extern "C" DLL_EXPORT BOOL APIENTRY DllMain(HINSTANCE /* hinstDLL */, DWORD /* f
 //---------------------------------------------------------------------------------------------------------------------
 C_LINKAGE DLL_EXPORT void json_to_css(const char* json, char** css)
 {
+    *css = nullptr;
     try
     {
         WretchedCss::RuleSet rules;
@@ -41,12 +44,14 @@ C_LINKAGE DLL_EXPORT void json_to_css(const char* json, char** css)
     }
     catch (std::exception const& exc)
     {
+        lastError = exc.what();
         WretchedCss::DisplayError(exc);
     }
 }
 //---------------------------------------------------------------------------------------------------------------------
 C_LINKAGE DLL_EXPORT void css_to_json(const char* css, char** json)
 {
+    *json = nullptr;
     try
     {
         WretchedCss::RuleSet rules{{css}};
@@ -55,12 +60,14 @@ C_LINKAGE DLL_EXPORT void css_to_json(const char* css, char** json)
     }
     catch (std::exception const& exc)
     {
+        lastError = exc.what();
         WretchedCss::DisplayError(exc);
     }
 }
 //---------------------------------------------------------------------------------------------------------------------
 C_LINKAGE DLL_EXPORT result_type selector_to_json(const char* selector, char** json)
 {
+    *json = nullptr;
     try
     {
         WretchedCss::Selector stor(selector);
@@ -73,6 +80,7 @@ C_LINKAGE DLL_EXPORT result_type selector_to_json(const char* selector, char** j
     }
     catch (std::exception const& exc)
     {
+        lastError = exc.what();
         WretchedCss::DisplayError(exc);
         return 1;
     }
@@ -80,6 +88,15 @@ C_LINKAGE DLL_EXPORT result_type selector_to_json(const char* selector, char** j
 //---------------------------------------------------------------------------------------------------------------------
 C_LINKAGE DLL_EXPORT void free_buffer(char* buffer)
 {
-    delete buffer;
+    if (buffer != nullptr)
+        delete buffer;
+}
+//---------------------------------------------------------------------------------------------------------------------
+C_LINKAGE DLL_EXPORT void get_last_error(char** error_message)
+{
+    if (!lastError.empty())
+        *error_message = allocateCString(lastError);
+    else
+        *error_message = nullptr;
 }
 //#####################################################################################################################

@@ -14,7 +14,8 @@ int main()
 {
     using namespace WretchedCss;
 
-    auto data = readStringFromFile ("testfile.txt");
+    //auto data = readStringFromFile ("testfile.txt");
+    auto data = readStringFromFile ("../wiki-vcl-css/compiled.css");
 
     StyleSheet sheet(data);
     auto body = sheet.select("body").get();

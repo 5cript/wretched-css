@@ -163,8 +163,8 @@ namespace WretchedCss
     {
 		auto tree = JSON::parse_json(json);
 
-		auto bla = JSON::polydecls <WretchedCss::Value>::identify_type(new WretchedCss::ValueTypes::StringValue);
-        auto blac = bla.c_str();
+		// auto bla = JSON::polydecls <WretchedCss::Value>::identify_type(new WretchedCss::ValueTypes::StringValue);
+        // auto blac = bla.c_str();
 
         JSON::parse(rules, "stream", tree);
     }
