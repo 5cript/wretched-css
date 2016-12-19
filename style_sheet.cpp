@@ -7,9 +7,15 @@
 namespace WretchedCss
 {
 //#####################################################################################################################
-    StyleSheet::StyleSheet(RuleSet const& ruleSet)
+    StyleSheet::StyleSheet()
         : styles_()
         , pxPerEm_(16)
+    {
+
+    }
+//---------------------------------------------------------------------------------------------------------------------
+    StyleSheet::StyleSheet(RuleSet const& ruleSet)
+        : StyleSheet()
     {
         for (auto const& i : ruleSet.rules)
             styles_.push_back({i});
@@ -70,6 +76,11 @@ namespace WretchedCss
         }
 
         return boost::optional <WretchedCss::Style> {combined.getCombined()};
+    }
+//---------------------------------------------------------------------------------------------------------------------
+    void StyleSheet::addStyle(Style const& style)
+    {
+        styles_.push_back(style);
     }
 //---------------------------------------------------------------------------------------------------------------------
     std::string StyleSheet::toString() const

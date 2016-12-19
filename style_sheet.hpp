@@ -10,6 +10,14 @@ namespace WretchedCss
     class StyleSheet
     {
     public:
+        /**
+         *  Create empty style sheet.
+         */
+        StyleSheet();
+
+        /**
+         *  Create style sheet from rule set.
+         */
         StyleSheet(RuleSet const& ruleSet);
 
         /**
@@ -73,6 +81,11 @@ namespace WretchedCss
          *  @return CSS formatted string.
          */
         std::string toString() const;
+
+        /**
+         *  Add style to the style sheet.
+         */
+        void addStyle(Style const& style);
 
     private:
         std::vector <Style> styles_;
