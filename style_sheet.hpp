@@ -20,10 +20,10 @@ namespace WretchedCss
          */
         StyleSheet(RuleSet const& ruleSet);
 
-        /**
-         *  Creates a style sheet from a CSS formatted string.
-         */
-        StyleSheet(std::string const& css);
+		/**
+		 *  Creates a style sheet from a CSS formatted string.
+		 */
+		explicit StyleSheet(std::string const& css);
 
         /**
          *  Returns the conversion factor for em <-> px.
@@ -86,6 +86,11 @@ namespace WretchedCss
          *  Add style to the style sheet.
          */
         void addStyle(Style const& style);
+
+        /**
+         *  Returns whether there is a rule or not.
+         **/
+        bool empty() const;
 
     private:
         std::vector <Style> styles_;

@@ -42,8 +42,52 @@
 			<Add option="-static-libstdc++" />
 			<Add option="-Wl,--kill-at" />
 		</Linker>
+		<Unit filename="bcb_patch.hpp" />
+		<Unit filename="debug/main.cpp" />
+		<Unit filename="debug/main.hpp" />
+		<Unit filename="dll.h" />
 		<Unit filename="dllmain.cpp" />
 		<Unit filename="dllmain.h" />
+		<Unit filename="parser/color.cpp" />
+		<Unit filename="parser/color.hpp" />
+		<Unit filename="parser/comment.hpp" />
+		<Unit filename="parser/numerical.cpp" />
+		<Unit filename="parser/numerical.hpp" />
+		<Unit filename="parser/property.cpp" />
+		<Unit filename="parser/property.hpp" />
+		<Unit filename="parser/rule_set.hpp" />
+		<Unit filename="parser/selector.hpp" />
+		<Unit filename="parser/url.hpp" />
+		<Unit filename="rule_set/rule/property/known_properties.hpp" />
+		<Unit filename="rule_set/rule/property/property.cpp" />
+		<Unit filename="rule_set/rule/property/property.hpp" />
+		<Unit filename="rule_set/rule/property/value.hpp" />
+		<Unit filename="rule_set/rule/property/value/color.cpp" />
+		<Unit filename="rule_set/rule/property/value/color.hpp" />
+		<Unit filename="rule_set/rule/property/value/dimensionless.cpp" />
+		<Unit filename="rule_set/rule/property/value/dimensionless.hpp" />
+		<Unit filename="rule_set/rule/property/value/keyword.hpp" />
+		<Unit filename="rule_set/rule/property/value/numerical.cpp" />
+		<Unit filename="rule_set/rule/property/value/numerical.hpp" />
+		<Unit filename="rule_set/rule/property/value/point.cpp" />
+		<Unit filename="rule_set/rule/property/value/point.hpp" />
+		<Unit filename="rule_set/rule/property/value/string.cpp" />
+		<Unit filename="rule_set/rule/property/value/string.hpp" />
+		<Unit filename="rule_set/rule/property/value/url.cpp" />
+		<Unit filename="rule_set/rule/property/value/url.hpp" />
+		<Unit filename="rule_set/rule/property/valueifier.hpp" />
+		<Unit filename="rule_set/rule/rule.cpp" />
+		<Unit filename="rule_set/rule/rule.hpp" />
+		<Unit filename="rule_set/rule/selector.cpp" />
+		<Unit filename="rule_set/rule/selector.hpp" />
+		<Unit filename="rule_set/rule_set.cpp" />
+		<Unit filename="rule_set/rule_set.hpp" />
+		<Unit filename="style.cpp" />
+		<Unit filename="style.hpp" />
+		<Unit filename="style_sheet.cpp" />
+		<Unit filename="style_sheet.hpp" />
+		<Unit filename="windebug.cpp" />
+		<Unit filename="windebug.hpp" />
 		<Extensions>
 			<code_completion />
 			<envvars />
